@@ -1,14 +1,11 @@
-import asyncio
-import websockets
+from flask import Flask, request, jsonify
 
-async def handle_ip_request(websocket, path):
-    # Extract the client IP from the request
-    ip = websocket.remote_address[0]
-    await websocket.send(ip)
+app = Flask(__name__)
 
-async def main():
-    async with websockets.serve(handle_ip_request, "0.0.0.0", 8765):
-        await asyncio.Future()  # Run forever
+@app.route('/get-client-ip', methods=['GET'])
+def get_client_ip():
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    return jsonify({"ip": client_ip})
 
-if __name__ == "__main__":
-    asyncio.run(main())
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
