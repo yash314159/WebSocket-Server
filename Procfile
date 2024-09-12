@@ -1,1 +1,1 @@
-web: streamlit run http_server.py
+web: python http_server.py
