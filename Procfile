@@ -1,1 +1,1 @@
-web: streamlit run WebSocket-Server.py
+web: streamlit run websocket_server.py
